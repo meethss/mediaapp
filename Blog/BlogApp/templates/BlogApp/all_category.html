@@ -1,0 +1,31 @@
+{% extends 'BlogApp/nav.html' %}
+
+{% block body %}    
+<div class="row" style="height: 20px;"></div>
+<div class="row" >
+    <div class="col-2">
+
+    </div>
+    <div class="col-8">
+        <table class="table table-striped" width="80%">
+        <tr>
+            <th> Categoty </th>
+            <th> Action </th>
+        </tr>
+
+        {% for category in all_category %}
+
+        <tr>
+            <td>{{ category.name }}</td>
+            <td>
+                <a href="{% url 'edit_category' id category.id %}">Edit</a> - <a href="{% url 'delete_category' id category.id %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    <div class="col-2">
+
+    </div>
+</div>
+{% endblock %}

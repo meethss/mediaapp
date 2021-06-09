@@ -1,0 +1,60 @@
+{% extends 'BlogApp/nav.html' %}
+
+{% load static %}
+{% block script %}
+<link rel="stylesheet" href="{% static 'assets/css/custome-page.css' %}">
+{% endblock %}
+{% block body %}
+<div class="center">
+    {% if messages %}
+    {% for message in messages %}
+        <div id="dialog" class="alert alert-dismissible fade show {% if message.tags %}alert-{{ message.tags }}{% endif %} col-xl-12" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+<form action='' method='POST' class="parsley-examples">
+    {% csrf_token %}
+    <div class="div-center"> 
+        <div class="form-group form-group--float col-md-10">
+            <label>Title<span class="text-danger"><b> *</b></span></label>
+            <input required type="text" class="form-control" value="{{new_blog.title.value|default:''}}" name='title'>
+            <i class="form-group__bar"></i>
+        </div>
+
+        <div class="form-group form-group--float col-md-10">
+            <label>Description </label>
+            <input type="text" class="form-control" value="{{new_blog.description.value|default:''}}" name='description'>
+            <i class="form-group__bar"></i>
+        </div>
+
+        <div class="form-group form-group--float col-md-10">
+            <label>Category<span class="text-danger"><b> *</b></span></label>
+            <select required class = "form-control" data-toggle="select2" name="category_id">
+                {% for catogery in catogerys %}
+                    <option value="{{catogery.id}}" {% if BlogForm.category_id.value == catogery.id %} selected {% endif %}>{{catogery.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group form-group--float col-md-10">
+            <label>Post Date </label>
+            <input type="date" class="form-control" value="{{new_blog.post_date.value|date:"Y-m-d"|default:''}}" name='post_date'>
+            <i class="form-group__bar"></i>
+        </div>
+    <div class="form-group text-left m-b-0">
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-success">Save</button>
+                <a href="{% url 'userhome' id %}" class="btn btn-secondary col-auto">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+    
+</form>
+</div>
+
+{% endblock %}
